@@ -1,0 +1,1555 @@
+Practical: 1
+
+Aim: Managing Hyper-V Environment with SCVMM 2012
+Step 1: Creation of Virtual Machine (Windows Server 2016)
+Open VMware Workstation Pro and Click on Create a New VM
+ Step 2: Select Custom (advanced)
+Step 3: Keep the Hardware Compatibility as default and click on Next
+Step 4: Click on the Browser and select the Windows Server iso file from the directory.
+Step 5: Leave this Windows Server as default pop-up open click on ok and click Next.
+Step 6: Name the Virtual Machine: Rahulk  and click on Next.
+Step 7: Select Firmware Type BIOS and click on Next.
+Step 8: Leave Processor Configuration as default and click on Next.
+Step 9: Change the RAM to 4096 MB and click on Next.
+Step 10: Select Network Type NAT and click on Next.
+Step 11: Select LSI Logic SAS and click on Next.
+Step 12: Keep the default NVMe and click on Next.
+Step 13: Select a create a new virtual disk and click on Next.
+Step 14: Keep the default and click on Next.
+Step 15: Leave it as default and click on Next.
+Step 16: click on finish.
+Step 17: Before Power on the virtual machine :
+•	Click on the Edit Virtual Machine Settings
+In Virtual Machine Setting go to Hardware and click on Floppy and uncheck the connect at power on.In Hardware click on Processors
+•	In Virtualization engine check Virtualize Intel VT -x/EPT or AMD-V/RVI
+•	And also check Virtualize CPU performance counters
+•	In Virtual Machine Setting click on options
+•	Within options click on General
+•	In General click on version and select Hyper-V (unsupported) and click on Ok
+Step 18: Now Power on the virtual machine.
+Step 19: Leave it as default and click on Next 
+Step 20: click on Install Now
+Step 21: Select Windows Server 2016 Datacenter Evaluation (Desktop Experience x 64)
+And click on Next
+Step 22: click on I accept the license term and click on Next.
+Step 23: On type of installation Select Custom: Install Windows only (advanced)
+Step 24: Leave it as Default and click on Next.
+Step 25: It will start installation
+Step 26: Set your password and click on finish
+Step 27: your windows server successfully created.
+Step 28: Within Windows Server open Server Manager
+Step 29: Installing Hyper-V
+•	Within Server Manager Click on Add roles and features
+•	Click On Next
+•	In Installation Type Select Role-based or feature-based installation
+•	Keep default setting and click on Next
+•	Select Hyper-V and Click Add Features and Click Next
+•	Select Failover Clustering and click on add feature and click Next 
+•	Make sure Group Policy Management also selected
+•	Click Next
+•	In Network adapters: check Ethernet0 and click Next
+•	Select Allow this server to send and receive live migrations of virtual machines
+And Click Nex
+•	Keep default and click on Next
+•	Click install after installation of hyper-v restart the virtual machine.
+Step 30: Now Adding Active Domain Directory Services
+•	Within Server Manager click on add roles and features
+•	Keep default and click on Next
+•	In installation type select: Role-based or feature-based installation
+•	Click on Next
+•	Keep default Settings and click on Next
+In Server Roles Click on Active Directory Domain Services a pop-up will appear Click Add Features
+•	In features selection select .NET Framework 3.5 Features and click on Next
+•	Click Next
+•	Click on install
+•	Feature installation start after installation restart virtual machine.
+Step 31: Change Server Name 
+•	Open Server Manager Click on Local Server
+•	In System Properties Click on Computer Name and click change
+•	Click on Computer name:  At the Computer Name/Domain Changes window enter a name for your computer Here it is “RahulServer” and click on OK.
+•	Then click on “Apply” button at the System Properties window.
+•	Then VM require restart.
+Step 32: Disable Firewall
+•	Within Server Manager click on Local Server and click on Firewall
+•	Click Turn Windows Firewall On or Off and Select Turn off windows Firewall for both Public and Private. Then Click OK
+Step 33: Domain Creation
+•	After the restart open Server Manager. Go to the Notification flag as it will be showing a warning sign.
+•	In the Post-deployment configuration notification click on the given link “Promote this server to a domain controller”
+•	This opens the Active Directory Domain Services Configuration Wizard, Select Add a forest option, enter a name for the new domain (here it is RAHUL.COM) and Click Next
+•	Enter a password for the domain (keep it same as the administrator password, recommended). Click on Next
+•	At DNS Options click on Next
+•	At Additional Options Keep the default options and click on Next
+•	At paths option Keep the default options and click on Next
+•	Click on Next
+•	At Pre-requisites Check. It should pass all prerequisites check and warning are acceptable
+•	Click on install
+•	After the Completion of installation the VM will restart for the changes take effect
+•	Log in as Administrator
+Step 34: Installing and Configuration SQL Server
+•	Drag and drop the required file for the practical into the VM
+•	Mount the SQL Server iso file
+•	Click on Setup
+The SQL Server Installation Center Open Click on Installation.
+Within Installation Select New SQL Server stand-alone installation or add features to an existing installation
+•	Leaves it as default and click on Next
+•	Select Accept license and terms and Click Next
+•	Click On Next
+
+•	Install Rules which should pass with only a few warnings and click on Next
+•	In Feature Selection select the features given below:
+1.Database Engine Services 
+2. Reporting Services – Native 
+3. Reporting Services SharePoint 
+4. Reporting Services Add-in for SharePoint products 
+5. Client Tools Connectivity
+•	After Feature Selection Click on Next
+•	Select Default instance and Click on Next
+•	Keep the default value and click on Next
+•	In Database Engine Configuration, Select Mixed Mode and enter the same password as set while creating the VM
+•	Click on Add Current User, it should display the current Domain User and Click Ok and click on Next
+•	Keep the default setting and click on Next
+•	Click on install
+•	It will start installation
+•	Click On Next
+•	It show installation Succeeded and click on clos
+Step 35: Installing ADK-setup 2016 (Windows Toolkit)
+•	run the ADK setu
+•	Keep it as default setting and click on Next
+Select No and click on Next
+•	For License Agreement Click on Accept
+•	Select the following feature:
+	Deployment Tools
+	Windows Preinstallation Environment (Windows PE)
+	Windows Performance Toolkit
+•	Click on install
+•	Installation of feature will start
+Step 36: Installing SQL Server Management Studio
+•	Run the SSMS setup
+•	Click on install
+•	Installation of feature will start
+•	Click on Restart
+Step 37: Creation of User
+•	Open Server Manager Click on Tools Within Tools Select Active Directory Users and Computer
+•	Now Right Click on Managed Service Accounts and Select New
+•	Within New Select User
+
+•	New Object-User
+•	Enter a Username (Here it is Username is VMMService) on both First name and User logon name and click on Next
+•	In this Step Enter a Password for user same as the admin and select Password never expires in the option And Click Next
+•	Click on Finish
+•	Now VMMService will show up under Active Directory Users and Computer 
+•	Now Right-Click on VMMService and Select Add to a Group
+•	At the Select Groups window type the initial letters of Administrators user and click on “Check Names” window. The “Administrators” user is displayed, click on “OK” button.
+•	The user is added to the group. Close Active Directory Users and Computers window.
+Step 38: Connecting SQL Server to Window Server
+•	Launch SQL Server Management Studio.
+•	Keep default value and Click on Connect
+•	Within Object Explorer Click on Security and right click on Logins and Select New Login
+
+•	At the Login – New Window type Login name: (VMMService) and click on “Search” button.
+•	At the Select User, Service Account, or Group window type the (VMMService) and click on “Check Names” window.
+
+
+•	The username with the domain name to which it belongs is displayed and click on “OK” button.
+•	Click on Server Roles In Server roles public selected by default.
+•	Select three more Server Roles:
+	dbcreator
+	processadmin
+	securityadmin
+•	Then Click on Ok and Close SSMS
+Step 39: Creating Object in ADSI Edit
+•	Open Server Manager Click on ToolsADSI Edits
+•	At the ADSI Edit window go to Action and click on Connect to….
+
+
+•	In Connection Settings Keep the Default Values and Click Ok and a default value is created
+•	At ADSI Edit window expand Default naming context by double clicking on it in the left pane.
+•	Right Click on the DC=RAHUL,DC=COM Folder and Click on New and Select Object
+•	At the Create Object Window Select the container class and click on Next
+•	Enter the value for the object (Here it is VMMObjectContainer) and click on Next
+•	At the final window click on finish
+•	Double Click on DC=RAHUL and Right Click on the CN=VMMObjectiContainer Folder and Select Properties
+•	Within Properties Click on distinguishedName and Click on View 
+•	Copy the distinguishedName onto a Notepad as it is needed for the SCVMM setup
+•	{The distinguishedName of object created in ADSI Edit (my system’s): CN=VMMObjectContainer,DC=RAHUL,DC=COM}
+•	Close the ADSI setup
+Step 40: SCVMM Setup
+•	From your CM Folder and Mount the SCVMM Setup file.
+•	Click on Next
+•	Select I accept the agreement and click on Next
+•	Keep default setting and Click on Next
+•	Click on Extract
+•	It Will Extract the file
+•	Go to your Local Disck (C:)System Center Virtual Machine Managersetup
+•	Double click on setup
+•	System Center 2019 VMM window open
+•	Click on Install
+•	Select VMM management server and VMM console get auto selected and click on Next
+•	Keep default setting and click on Next
+•	Select I have read and accept the license agreement and Click Next
+•	Click Next
+•	For Microsoft Update Click on off and Click Next
+•	Keep default Setting and click on Next
+•	Now in database configuration, type the same user and domain which was created (In this case its VMMService) and keep the instance name as default MSSQLSERVE
+•	Here in service account configuration, Select Domain Account and type in the User and Password (For VMMService)
+•	Select Store my keys in Active Directory and paste the distinguishedName that we have saved from before
+
+•	Keep default setting and click Next
+•	Keep default setting and click Nex
+•	Click on Install
+•	After installation Click on Close
+•	At VMM’s Connect to Server window select “Specify credentials” option. Enter the Administrator username with the domain name and give the administrator password. Click on “Connect” button.
+•	The main window of Virtual Machine Manager (VMM) looks like…
+Step 41: Creation Logical Network
+•	Click on Fabric
+•	Click on Networking
+•	Within Networking right click on Logical Network and Select Create Logical Network
+•	Specify a name and description for the logical network Here Name is Subnet
+•	Click Next
+•	Select One connected network within Select Create a VM network with the same name to allow virtual machines to access this logical network directly
+•	Click Next
+•	In Network Sites and Click Add
+•	Click on All hosts
+•	Click on Insert Now and Type 1 in VLAN and a sample IP (Here it is 192.168.29.0/24) and Click Next
+•	Confirm the Settings and Click on Finish
+Step 42: Creating IP Pools
+•	Now in SCVMM on the Top Click on Create
+•	Within Create Click on Create IP Pool
+•	Specify the IP address pool name and logical network Here Name is Pool
+•	And Make Sure Logical Network is Subnet
+•	Click on Nex
+•	Keep default values and Click Next
+•	In IP Address Range change the Starting IP Address to 192.168.29.100 and Ending IP Address Range to 192.168.29.110
+•	Click Next
+•	In Gateway,
+•	Within Default Gateways Click on Insert
+•	Type the Gateway Address as 192.168.29.1 and Keep the metric as Automatic
+•	Click Next
+•	In DNS, within DNS server address in the order of use Click on Insert Type in the IP address 192.168.29.9
+•	In DNS Suffix type your Domainname.Online i.e in this case it is RAHUL.ONLINE
+•	Click Next
+In WINS Server Keep it as is and Click Next
+•	View the Summary and Click Finish
+Step 43: Create IP Port Profile
+•	In SCVMM Click on Fabric
+•	Within Fabric Click on Networking
+•	Within Networking Right Click on Port Profiles and Select Create Hyper-V Port Profile
+•	Call this Profile and Click Next
+•	Make Sure Virtual network adapter port profile also selected
+•	In Offload Setting Select the following options:
+	Enable virtual machine queue
+	Enable IPSec task offloading
+•	Click on Next
+•	In Security Settings Select Allow MAC spoofing and Click Next
+•	Keep the default value and Click on Next
+•	Review the Summary and Click On Finis
+•	New Port Profile called Profile is created
+Step 44: Create Logical Switches
+•	In SCVMM Click on Fabric
+•	Within Fabric Click on Networking
+•	Within Networking Right-Click on Logical Switches and Select Create Logical Switch
+•	Click on Next
+•	Call it Switch and Click Next
+•	Keep default values and Click Nex
+•	Keep default values and Click Next
+•	In Virtual Port Click Add
+•	In Port Classification Select Medium Bandwidth
+•	Click on Include a Hyper-V Virtual Network adapter port profile in this virtual port and Select Medium Bandwidth
+•	Click On OK
+•	On Virtual Port Click Next
+•	On Uplink Click on Add
+•	Select New Uplink Port Profile
+•	In Name type Uplink
+•	Select the Subnet_0
+•	Review the Summary and Click on Finish
+Step 45: Create Hyper-V Hosts and Clusters
+•	In SCVMM Click on Fabric
+•	Right Click on All Hosts and Select Add Hyper-V Hosts and Clusters
+
+
+
+•	Keep Default Setting and Click on Next
+•	In Credentials Select Manually enter the credentials and Enter user name and Password (Here user name is RAHUL\ADMINISTRATOR)
+•	Click on Next
+•	In Computer names Specify your computer name (Here it is RahulServer)
+•	Click on Next
+•	In Target Resources Check Computer Name (Here it is rahulserver.rahul.com)
+•	After Check on computer name pop-up window open click on OK
+•	Click on Next
+•	Keep Default value and Click on Next
+•	View the Summary and Click on Finish
+•	In SCVMM Click on VMs and Services 
+•	In VMs and Service Right-Click on Cloud Select Create Cloud
+•	Specify a name for the cloud (Here it is cloud) and Click on Next
+•	In Resources Tick All Hosts and Click on Next
+•	In Logical Networks Tick localdomain and Click on Next
+•	In Load Balancers Select Microsoft Network Load Balancer and Click on Next
+•	Keep Default and Click on Next
+•	In Port Classification Select Medium bandwidth and Click on Next
+•	In Storage Select Local Storage and Click on Next
+•	In Library browse stored VM path and select MSSCVMMLibrary and Click Ok
+•	Keep the Default Value and Click on Next
+•	In Capability Profiles Select Hyper-V and Click Next
+•	Keep Default Value and Click on Next
+•	Keep Default Value and Click on Next
+•	View Summary and Click on Finish
+•	Cloud Created
+Step 46: Add Windows iso to SCVMM
+•	In SCVMM Click on Library
+•	Within Library Click on Library Servers
+•	Within Library Servers Click on Domain Name (Here it is RahulServer.Rahul.COM)
+•	Within that Click on MSSCVMMLibrary
+•	On Top Click the Import Physical Resource
+•	In Import Physical Resource Click on Add resource and Select the Windows 7 iso file on your Desktop
+•	In Select Library Server Click Browse and Select MSSCVMMLibrary and Click Import
+
+
+Aim: Installing and Enabling Host Guardian in a Cloud
+Step 1: Adding the Host Guardian Role in Roles and Features
+•	Open Server Manager and Click on Add Roles and Features
+•	Click Nex
+•	Keep default values and Click Next
+•	Keep default values and Click Next
+•	Select Host Guardian Service and Click Add Features
+•	Select the following feature and Click on Nex
+•	Click Next
+•	Click Nex
+•	Click Next
+•	Select the following features and Click on Next
+Click on Install
+•	installation process start
+•	After the installation of features click on close
+•	After restarting open the System Center 2019 Virtual Machine Manager Select Use current Microsoft Windows session identity and Click on Connect
+•	On the dashboard Click on Settings and Select Host Guardian Service Settings
+•	Within Host Guardian Service Settings Enter your custom domain name followed by Attestation and Repeat the same for Key Protection.
+•	(Here it is http://hgs.EDTECH.COM/Attestation and http://hgs. EDTECH.COM /KeyProtection)
+•	After entering details Click on Finish
+•	Pre-requisite: Create a Cloud and Create a Server on a Host Group (Here it is EDTECH)
+•	Now within your Host Group Right-Click on EDTECH and Select Properties
+•	Within properties Select Host Guardian Service and Select Enable Host Guardian Hyper-V Support and use the URLs configured as global settings in VMM and Click Ok
+
+•	Pop up open click on yes
+Step 2: Creating the pfx file for the HGS Server
+•	Open Windows Powershell as Administrator
+•	$certificatePassword = Read-Host –AsSecureString –Prompt ‘Enter a password for the PFX file’
+
+
+
+
+Practical: 2
+Aim: Deploy Service Manager and SQL Server Reporting Services for a 2 Computer Scenario.
+Step 1: We have to establish a connection with a Domain Controller and a User ( SQL SERVER)   
+
+
+
+
+
+
+Step 2: Installing SQL Server 2016 in VM 2
+Within your Cloud Management Server Click on SQL Server 2016 iso.
+•	Double Click Setup to start the installer
+•	Click on Installation and Click on New SQL Server standalone installation
+•	Keep default values and Click Next
+•	Select I accept the license terms and Click Next
+•	Keep default values and Click Next
+•	Click Next
+•	Click Next
+
+•	Select the features given below:
+o	SQL Server Replication
+o	Full Text and Semantic Extractions for Search
+o	Analysis Service
+o	Reporting Service –Native
+o	Reporting Service –Sharepoint
+o	Reporting Service add-in for Sharepoint Products
+o	And Click Next
+
+•	Select Named Instance and type MSSQLSERVER and Click Next
+•	Keep default values and Click Next
+•	Select Mixed Mode and Set a password (Here it is admin@123) and Click on Add Current User and Click Next
+
+•	Click on Add Current User and Click Next
+•	Keep default values and Click Next
+
+•	Click on Install
+
+•	SQL Files will start installing
+
+•	SQL Server has finished installing and Click Close
+Step 3: Installing SSMS (SQL Server Management Studio)
+•	Click on the SSMS setup
+•	Click Install 
+•	SSMS will start installing 
+
+•	After the components are Installed you will have to restart your VM. Click on Restart
+Step 4: Connect SQL Server to SSMS
+•	Open SSMS
+•	Click on Microsoft SQL Server Management
+•	Click on Connect
+Step 5: Install System Center Service Manager 2019
+
+•	Click on the SCSM_2019 setup
+•	Click on Run
+•	Click Next
+•	Select I accept the agreement and Click Next
+•	Keep default path and Click Next
+
+•	Click on Extract
+•	Click on Finis
+•	After extracting open the SCSM 2019 file in your C: Directory and Click on Setup
+•	Click on Service Manager Management Server
+
+
+•	Select Install as Evaluation Edition and Select I have read and understood the above agreement and Click Next
+•	Keep default values and Click Next
+•	Setup following hardware or software prerequisites on this computer
+
+o	Microsoft Report Viewer
+o	Microsoft SQL Server 2014
+o	Microsoft .NET 3.5 framework
+•	install the Analysis Management Objects (AMO) 2014.
+•	Click on Setup file
+•	Click Next
+•	Select I accept the terms of this agreement and Click Next
+•	Click on Install
+
+•	Install Microsoft Report Viewer
+To install Microsoft Report Viewer Click on Given Link Install Microsoft Report Viewer Redistributable
+
+
+•	Install Microsoft .NET 3.5 framework
+•	Go to the RahulVm2->Server Manager
+•	Click on Add roles and features
+•	Click on Next
+•	Click on Next
+•	Keep Default Setting and Click on Next
+•	Click on Next
+•	Select .NET Framework 3.5 features and Click on Next
+•	Click on Next
+
+•	Select the following features and Click on Next
+•	Select the following features and Click on Next
+•	Click on Instal
+•	Installation Process Start
+
+•	After the Installation Click on Close 
+
+•	After the Installation Following Setup:
+
+o	Microsoft Report Viewer
+o	Microsoft SQL Server 2014
+o	Microsoft .NET 3.5 framework
+
+•	Click on Check pre-requisites again, the error will be solved and Click Next
+
+•	Enter your SQL Server name (In this case it is WIN-DFHKO8DGB38) and Click Next
+
+•	Enter a management group name (Here it is SMGROUP) and Click on browse and within the text field type RAHUL0\ADMINISTRATOR and Click Ok
+•	Select the following Click on Ok
+
+•	Click On
+•	Click Next
+•	Select Domain Account and Enter the details of the Domain Controller and Click Test Credentials and Click Next
+•	Click Next
+•	Select I do not want Microsoft Updates and Click Next
+•	Click Install
+
+•	Service Management Server will start installing 
+•	The service management server is successfully created.
+
+Step 6: Installing SQL Server Reporting Services
+•	Click on the SQLSERVERREPORTINGSERVICES installer
+•	Click on Install Reporting Services
+•	Keep Default Setting Click on Next
+
+•	Click on I accept the License term
+•	Click on Next
+•	Click Next
+•	Installation Process Start
+•	After completion Click on Configure Report Server
+•	Keep default values and Click on Connect
+•	Select Service Account, within service account in Use built-in account Select Network Service and Click Apply
+•	Select Web Service URL, Change the Virtual Directory Value to ReportServer1 and Click Apply
+•	Select Database and Click on Change Database
+•	Keep default values and Click Next
+
+•	Keep default values, Click on Test Connection
+•	Click on OK
+•	Click on Next
+•	Change Database name to ReportServer1 and Click Next
+•	Keep default values and Click Next
+•	Click on Next
+•	Database configuration will install, after installation Click on Finish
+•	Select Web Portal URL and keep a copy of the url on which your reports will be shown.
+
+•	Within your VM’s Directory create a new folder named Backup
+•	Select Encryption Keys and Click on Backup
+•	Click on Backup
+•	Give File name mscitbackupkey and Click on Save
+•	Browse the folder that you just created and save a new file under any name (Here it is ReportServer1) and give it a password and Click Ok
+•	Now go back to the SCSM setup and continue from Encryption Key Backup, Click Next
+•	Keep default values and Click Next
+•	Click on Browser
+•	Select mscitbackupkey.snk folder and Click on Open
+•	Click Next
+•	Click on Yes
+
+•	Enter the password and Click Next
+•	Click on Finish
+•	Now within your SSMS you can see the new database that has been created
+
+
+
+
+
+
+
+Practical: 3
+Practical 3A: Installing System Centre Orchestrator
+¬¬¬¬¬               
+Pre-requisites: 
+Using the two Computer scenario same as practical 2 we can use the Same Domain Controller and SQL instance in this practical
+Feature require:
+•	System Centre Orchestrator 2019
+Step 1: Installing System Center Orchestrator 2019
+•	Click on SCO_2019
+•	Click on Run
+•	Click on Next
+•	Select I accept the agreement and Click Next
+•	Keep the default value and Click on Next
+•	Click on Extra
+•	It will start extracting the necessary files to the destination folder
+•	Click on Finish
+•	Now go to Your Local Disk (C:) Within Local Disk Click on System Center Orchestrator 2019
+•	Within System Center Orchestrator 2019 Double Click on SetupOrchestrator
+•	Click on Install
+•	Type a name under organization (Here it is Masters) and Click Next
+•	Select I accept the license terms and Click Next
+•	Click on Next
+•	Keep default values and Click Next
+•	Select Activate IIS/.NET features/roles and Click Next
+•	It will start the installing prerequisites
+•	After installing pre-requisites Click on Nex
+•	In Configure Service Account Type the credentials of the domain you have selected and Test it,If the Test is successful Click Next
+•	Enter your SQL Database server name and Test the database server connection.If the Test is successful Click Next
+•	Select New Database and Enter the name as Orchestrator and Click Next
+•	Keep default values and Click Next
+•	Click on Next
+•	Select Off and Click on Next
+
+
+
+•	Select No, I am not willing to participate and Click Next
+•	Check the summary of your features and Click on Install
+•	It will start installing the features
+•	Click on Close
+•	After installation is complete the Runbook Designer will start
+Step 2: : Installing Sliverlight_x64
+•	In your New Folder Click on the Silverlight_x64 application
+•	Click on Install Now
+•	It will start the installation
+•	Click Next
+•	Click Close
+
+Practical 3-B: Creating & Testing a monitor Runbook
+Aim: Creating and Testing a Monitor Runbook
+•	Name the folder and again Right-Click on the Folder and Select Runbook
+•	New Runbook Created
+Now within the Runbook created we have to show a workflow being executed. On the left side in Activites Select the following Items:
+Monitoring: Get Service Status -> Notifications: Send Event Log Message-> System: Restart System 
+•	Now with these three features link them to each other as shown below:
+•	Double-Click on Get Service Status, within it type a computer name (Here it is MASTERS.COM) and in Service select DHCP Client
+•	Select Security and Click on this account and enter your credentials and Click on Finish
+•	Double-Click on Send-Event-Log Message, within that type the computer name (Here it is MASTERS.COM) and Enter a Message i.e (DHCP SERVER HAS STOPED WILL RESTART AFTER 30 SEC) and Select Error in Severity
+•	Select Security and Click on this account and enter your credentials and Click on Finish
+•	Double-Click on Restart System, within that type the computer name (Here it is MASTERS.COM) and Enter a Message i.e (DHCP SERVER STOPEDd WILL RESTART AFTER 30 SEC)
+•	Select Security and Click on this account and enter your credentials and Click on Finish
+•	Click on Runbook Tester
+•	Within Runbook Test Click on Run
+•	The Logs should show three successful tasks
+•	Now if we go back to our domain controller we will see this message and will restart your Domain Controller
+
+Practical: 4
+•	Aim: Deploy and Manage SDN infrastructure using SCVMM 2019.
+Pre-requisites:
+•	SCVMM from practical 1
+4-A: Deploying Network Controller
+Step 1: Create a Logical Network
+•	Open SCVMM and Click on the Fabric Tab and Select Networking, within Networking Right-Click on Logical Network and Select Create Logical Network
+And Specify a name for the logical Network (Here it is: Logical_Network) and Click on Next
+•	Select One-connected network and Tick both Allow new VM networks created on the logical network to use network virtualisation and Click on Next
+•	Click on Add and Select Hostgroup and Click on Insert Now and type in the VLAN number and an IP Address and Click on Next
+•	Click on Finish
+Step 2: Creating IP Pools
+•	Right-Click on Logical Network and Select Create IP Pool
+•	Name it Pool and Make sure the Logical Network you just created has been selected and Click on Next
+•	Keep the default value and Click on Next
+•	In IP Address range Change the Starting IP Address to 192.168.29.100 and Ending IP Address Range to 192.168.29.110 and Click 0n Next
+•	Within Default Gateway Click on Insert and Enter the IP Address 192.168.29.1 and Keep the metric as Automatic and Click on Next
+•	In DNS, within DNS Server address in the order of use Click on Insert and Type in the IP Address 192.168.29.9 and Click on Next
+•	Click on Finish
+Step 3: Creating Logical Switch
+•	In Networking, Right-Click on Logical Switch and Select Create Logical Switch
+•	Click on Next
+•	Name the Switch and Select No Uplink Team and Click on Next
+•	Keep the default Setting and Click on Next
+•	Keep the default Setting and Click on Next
+•	Click on Add, in port classification Select Medium bandwidth and Select Include a Hyper-V virtual network adapter port profile in this virtual port and Select Medium bandwidth adapter and Click on Ok 
+•	Click on Next
+•	Click on Add Give the Name (Here it is Uplink) and In Network sites: Check Logical_ Network_0 and then Click on New virtual network adapter
+•	Name your virtual network adapter and Keep majority of the settings default and Select Medium bandwidth in Port Profile and Click Next
+•	Click on Finish
+Step 4: Setting up the Security Certificate
+•	In your Windows Run type in certlm.msc and Click On Ok
+•	Now Click on Personal and Select Certificate and within Certificate, Right-Click on EDTECH.EDTECH.COM and msstrgsvc and Click All tasks and Click Export
+•	Click Next
+•	Select Yes, export the private key and Click on Next
+•	Keep default values and Click on Next
+•	Give it a file name and Click on Next
+•	Click on Finish
+•	Now Right-Click on the certificate again and Click on Export
+•	Click On Next
+•	Select No, do not export the private key and Click On Next
+•	Select Base-64-encoded X.509 (.CER) and Click On Next
+•	Give it a path and Click On Next
+•	Click Finish
+Step 5: Set up Service Template
+•	In SCVMM Select the Library Tab and Click on Import Template
+•	In Select Package Open Run Window and then Type IP address of the WinServ(New) (Here it is \\192.168.149.200) Click on Ok
+•	Within MSSCVMMLibrary Select NC Folder and then Copy the Path
+•	Now again Go to the Select Package window Click on Browse
+•	Now paste the path for NC and then Click on Enter
+•	Within NC Folder Select Network Controller Production Generation 2 and then Click on Ok
+•	Click on Next
+•	Within Configuration References Click on WinServer.vh and then Click on Edit
+•	Within Type: VHDX Select Blank Disk – Large.vhdx and Click on OK
+•	Now again within Configure Reference Click on NCSetup.cr and then Click on Edit
+•	Select NCSetup.cr and Click on Ok
+•	Click on Next
+•	Click on import
+•	Here we successfully import template
+•	Within Service Templates Right-Click on Network Controller Production 1.0 and then Click on Configure Deployment
+•	Give it a name and Select you management as your Logical Network and Click Ok.
+•	This is the deployment of the Network Controller Service Template
+
+
+
+4-B: Deploying Software Load Balancer
+Step 1: Create a Logical Network
+•	Create a new logical network by Selecting the Fabric Tab in SCVMM and Right-Click on Logical Networks and Select Create a Logical Network
+•	Give Name for your Logical Network (Here it is: SLB_LOGICAL NETWORK)
+And then Click on Next
+•	Select One-connected network and Tick both Allow new VM networks created on the logical network to use network virtualisation and Click on Next
+•	Within Network Site Click on Add Select All Hosts and then Click on Insert row Enter VLAN and IP address Here it is: 192.168.10.0/24 and then Click on Next
+•	Click on Finish
+Step 2: Create IP Pool 
+•	Right-Click on SLB_LOGICAL NETWORK and then Select Create IP Pool
+•	Specify the IP address pool name and logical network (Here it is: SLB POOL) and then Click on Next
+•	Keep the default Value and Click on Next
+•	Keep the Starting IP address as 192.168.10.10 and the Ending IP Address as 192.168.10.110 and Click Next
+•	Enter a Default gateway address 192.168.10.1 and Keep the Metric as Automatic and Click on Next
+•	Enter a DNS IP Address (Here it is 192.168.10.2) and a DNS Suffix which is your DOMAIN_NAME.ONLINE (Here it is RAHUL.ONLINE) and Click on Next
+•	Click on Next
+•	Click on Finish
+Step 3: Creating an SLB Service Template
+•	Select the Library Tab and Click on Import Template
+•	In Select Package Open Run Window and then Type IP address of the WinServ(New) (Here it is \\192.168.149.200) Click on Ok
+•	Within MSSCVMMLibrary Select SLB Folder and then Copy the Path
+•	Now again Go to the Select Package window Click on Browse
+•	Now paste the path for SLB and then Click on Enter
+•	Within SLB Folder Select Network SLB Production Generation 2 VM and then Click on Open
+•	Click on Next
+•	Within Configuration References Click on WinServer.vhdx and then Click on Edit
+•	Within Type: VHDX Select Blank Disk – Large.vhdx and Click on OK
+•	In NCCertificate, Click on the Custom Resource NCCertificate.cr and Click Ok
+•	Click on Next
+Click on Import
+
+Step 4: Deploying the SLB Service Template
+•	Within Service Templates Right-Click on SlbMuxServiceTemplate and then Click on Configure Deployment
+•	Type in the name (Here it is SLB_DEPLOY) and in the Transit and Management Network Select the newly created Logical Network (Here it is SLB_LOGICI NETWORK) and Click on Ok
+•	Now in Settings Select the Following:
+•	localAdmin: NT AUTHORITY\Local Service
+•	ManagementNetwork: SLB_LOGI NETWORK
+•	MgmtDomainAccount: NT AUTHORITY\LocalService
+•	MgmtDomain FQDN: EDTECH.EDTECH.COM
+•	SelfSignedCertificate: True
+•	TransitNetwork: SLB_LOGI NETWORK
+Step 4: Deploying the GRE Service Template
+Step 1: Create a Logical Network
+•	Create a new logical network by Selecting the Fabric Tab in SCVMM and Right-Click on Logical Networks and Select Create a Logical Network
+•	Give Name for your Logical Network (Here it is: GW_LOGICAL)
+And then Click on Next
+•	Select One-connected network and Tick both Allow new VM networks created on the logical network to use network virtualisation and Click on Next
+•	Within Network Site Click on Add Select All Hosts and then Click on Insert row Enter VLAN and IP address Here it is: 192.168.20.0/24 and then Click on Next
+•	Click on Finish
+Step 2: Create IP Pool 
+•	Right-Click on GW_LOGICAL and then Select Create IP Pool
+•	Specify the IP address pool name and logical network (Here it is: GW_POOL) and then Click on Next
+•	Keep the default Value and Click on Next
+•	Keep the Starting IP address as 192.168.20.100 and the Ending IP Address as 192.168.20.110 and Click Next
+•	Enter a Default gateway address 192.168.20.1 and Keep the Metric as Automatic and Click on Next
+•	Enter a DNS IP Address (Here it is 192.168.20.1) and a DNS Suffix which is your DOMAIN_NAME.ONLINE (Here it is RAHUL.ONLINE) and Click on Next
+•	Click on Next
+•	Click on Finish
+Step 3: Creating a GW Service Template
+•	Select the Library Tab and Click on Import Template
+•	In Select Package Open Run Window and then Type IP address of the WinServ(New) (Here it is \\192.168.149.200) Click on Ok
+•	Within MSSCVMMLibrary Select GW Folder and then Copy the Path
+•	Now again Go to the Select Package window Click on Browse
+•	Now paste the path for GW and then Click on Enter
+•	Within GW Folder Select Network EdgeServiceTemplate_Generation 2 VM and then Click on Open
+•	Click on Next
+•	Within Configuration References Click on WinServer.vhdx and then Click on Edit
+•	Within Type: VHDX Select Blank Disk – Large.vhdx and Click on OK
+•	Click on EdgeDeployment Windows Server Gateway and then Select EdgeDeployment.cr and Click on Ok
+•	Click on Next
+•	Click on Import
+Step 4: Deploying the GW Service Template
+•	Within Service Templates Right-Click on EdgeServiceTemplate and then Click on Configure Deployment
+•	Type in the name (Here it is GW DEPLOY) and in the Transit and Management Network Select the newly created Logical Network (Here it is GW_LOGICI) and Click on Ok
+•	Here enter the following:
+•	AdminAccount: NT AUTHORITY\LocalService
+•	MangementNetwork: GW_LOGICAL
+•	MgmtDomainAccount: NT AUTHORITY\Local Service
+•	MgmtDomainFQDN: EDTECH.EDTECH.COM
+
+
+
+
+Practical: 5
+Aim: Install and Deploy DPM.
+
+5A: Installing DPM
+Pre-requisites:
+•	Domain Controller (Here Domain Controller Name Winser (New))
+•	User Containing SQL Server (Here User Name SQLPRACTICAL5)
+Step 1: We will be using the same Domain Controller created in Practical 2 and only have to create a new User VM.
+•	Open VMware Workstation and Click on Create a New Virtual Machine.
+•	Select Custom and Click on Next
+•	Keep default values and Click Next
+•	Select Installer disc image file (iso): Click on Browser and Select Windows Server 2016 and Click on Next
+•	Click Yes and Click on Next
+•	Give Virtual Machine Name (Here it is SQLPRACTICAL5) and Click on Next
+•	Select BIOS and Click on Next
+•	Keep default values and Click on Next
+•	Change the RAM value to 10084 MB and Click Next
+•	Keep default values and Click on Next
+•	Keep default values and Click on Next
+•	Keep default values and Click on Next
+•	Keep default values and Click on Next
+•	Keep default values and Click on Next
+Keep default values and Click on Next
+•	Click on Finish
+•	Your Virtual Machine Has Been Created
+Step 2: Before Power on this virtual machine a few change need to be in this virtual machine settings.
+•	Click on Edit virtual machine settings
+•	Within virtual machine settings Select Floppy and Un-Click Connect on Power On and Click on OK
+•	Now Power On your virtual machine
+•	Click on Next
+•	Click on Install Now
+•	Select Window Server 2016 Datacenter Evaluation (Desktop Experience) and Click on Next
+•	Select I accept the license and Click on Next
+•	Keep default settings and Click on Next
+•	Windows Server will begin installing
+•	After installation type in a password for the Windows Server and Click Finish
+•	Your Windows Server has now been successfully created
+Step 3: Establishing a connection with the User VM and Domain Controller by connecting the User VM to the Domain Controller’s Workgroup
+•	Open Control Panel and Click on Network and Internet
+•	Click on Network and Sharing Center
+•	Click on Change adapter settings
+•	Right Click on Ethernet0 and Select Properties
+•	Within Ethernet0 Status Click on Properties
+•	Click on Internet Protocol Version 4
+•	Click on Advanced
+•	Click on DNS
+•	Click on Add
+•	Add the IP Address of the Domain Controller and Click Ok
+•	Now Exit out of network settings and Click on Server Manager
+•	Within Server Manger Click on Local Server and Select Workgroup
+•	Click on Change
+•	Click on Domain
+•	Type the Domain name (here it is EDTECH.COM) and Click Ok
+•	Enter the credentials of the Domain Controller and Click on Ok
+•	The User VM is now in the same Domain as the Domain Controller and the system will require a restart for the changes to take effect
+Step 4: Creation of User (SCDPM)
+•	To create a User first we require the Active Directory Domain Service which can be added through the Server Manager
+•	Open Server Manager and Click on Add Roles and Features
+•	Click on Next
+•	Select Role-based or Feature-based installation and Click Next
+•	Keep default settings and Click on Next
+•	Select Active Directory Domain Service and Click on Add Feature and Click on Next
+•	Select the following feature and Click on Next
+•	Click on Nex
+•	Click on Next
+•	Click on Nex
+•	Click on Next
+•	Click on Install
+•	Installation Process Start
+•	After Installation Click on Close
+•	After installation, within Server Manager Click on Tools and Select Active Directory User and Computers
+•	Within Active Directory Users and Computers, Click on Action and Select Change Domain
+•	Click on Browse and Select the Domain Controller (Here it is EDTECH.COM) and Click Ok
+•	Click on OK
+•	Now the Domain Controller will be added, Click on the Domain Controller and Click on User
+•	Right Click on Users and Click New and User
+•	Type in a new User name (here it is SCDPM) and Click Next
+•	Type in a password and Select Password never expires and Click Next
+
+
+•	Click on Finish
+
+•	Add the User to the Domain Group, Right Click on SCDPM and Select Add to a group
+•	Enter your credentials for an account with permissions for EDTECH.EDTECH.COM
+•	Type in Administrator and Click on Check Names and Click on Ok
+•	Click on OK
+•	Now Login as SCDPM
+Step 5: Installing SQL Server
+•	Now Open the SQL 2016 setup file from your folder
+Note: This has to take place within SCDPM User and not Administrator
+•	Enter Credential for admin
+•	Select Installation and Click on New SQL Server Stand-alone installation
+•	Click on Specify a free edition and Select Evaluation and Click on Next
+•	Accept the license and Click on Next
+•	Click on Next
+•	Click on Next
+Note: Windows Firewall Warning accept
+Select the following Features:
+•	Database Engine Service
+•	Reporting Service-Native
+•	Click on Next
+•	Keep the Default Setting and Click on Next
+•	Change the Account Name for SQL Server Agent, Database Engine and Reporting Services to the Users Account and Ensure the Start-up type is Automatic and Click Next
+•	Click on Add Current User (Ensure it is SCDPM and not the Administrator) and Click Next
+•	Select Install and configure and Click on Next
+•	Click on Install
+•	Installation Process start
+•	After the installation of feature Click on Close
+•	Now Open SSMS Setup from your folder
+•	Click on Install
+•	SSMS will start installing onto your system
+•	After the installation Click on Restart
+•	Open SQL Server Management Studio 18
+•	SQL Server Management Studio Window Open
+•	Keep the Default Setting and Click on Connect
+Step 6: Installing Data Protection Manager
+•	Open SCDPM_2019 from your folder
+•	Click on Run
+•	Click on Next
+•	Accept the agreement and Click on Next
+•	Keep the default setting and Click on Next
+•	Click on Extract
+•	Extracting the necessary the file 
+•	Click on Finish
+•	Now In you C: Directory Click on the System Center Data Protection Manager folder and Click on Setup
+•	Click on Data Protection Manager
+•	Accept the license 
+•	Extracting the Necessary file
+•	Click on Next
+•	Select Use Stand-alone SQL Server and Enter the Server Name and Click on Check and Install
+•	It will start Checking Prerequisites
+•	After the checks are completed Click Next
+•	Enter User name: RAHUL DPM and Company Name: RD NATIONAL and Click on Next
+•	Keep default setting and Click on Next
+•	Click on I do not want to use Microsoft Update and Click on Next
+•	Click on Install
+•	DPM will start installing
+•	After the Installation of DPM Click on Close
+Step 7: Creating and initializing iSCSI Disk Storage
+The following steps have to be executed in the Domain Controller:
+•	Open Server Manager and Click on File and Storage Services
+•	Within File and Storage Services Click on iSCSI and Click on To install iSCSI Target Server, Start the Add Roles and Features Wizard
+•	Select the following feature and Click on Next
+•	Select the following feature and Click on Next
+•	Click on Install
+•	Starting Installation
+•	After the Installation Click on Close
+•	Click on To create an iSCSI virtual disk, start the New iSCSI Virtual Disk Wizard
+•	Select Type a Custom path and Click on Browse
+•	Create New Folder and Give Name DPM
+•	Select DPM Folder
+•	Click on Next
+•	Give iSCSI Virtual Disk Name (Here it is Storage 1) and Click on Next
+•	Give iSCSI Virtual Disk Size: 10 GB and Select Fixed size and Click on Next
+•	Select New iSCSI target and Click on Next
+
+•	Enter Target Name and Access (Here it is EDTECH.EDTECH.COM) and Click on Next
+•	In Access Server Click on Add
+•	Click on Browse
+•	Type EDTECH and Click on Check Names and Click on OK
+•	Click on OK
+•	Click on Next
+•	Keep Default Setting and Click on Next
+•	Click on Create
+•	After iSCSI virtual disk created Click on Close
+Note: The following steps are for the SCDPM VM instance, where we will initialize the iSCSI instance created in the domain controller. Ensure that both VM are running
+•	Open Server Manager 
+•	Within Server Manager Click on Tools and Select iSCSI Initiator
+•	Click on Yes
+•	Within iSCSI Initiator Click on Configuration
+•	Click on Change 
+•	After Click on Change and paste IQN value from the Domain Controller and Click Ok
+•	Now Click on Targets and Enter the Target Name (Here it is EDTECH.COM) Domain Controller and Click on Quick Connect
+•	It show Login Succeeded.
+•	Confirm the connection on the iSCSI Server on the Domain Controller
+•	It Show Virtual Disk Target Connected.
+
+Step 8: Creating Disk Storage in SCDPM
+•	There are a few modification that need to be made to the SCDPM VM
+•	Shutdown the VM
+•	Click on Edit virtual machine settings
+•	Now within Edit virtual machine settings Click on Add
+•	Select Hard Disk and Click Next
+•	Select SCSI and Click Next
+•	Keep default values and Click Next
+•	Select Store virtual disk as a single file and Click Next
+•	Click on Finish
+•	Click on Ok and Check if the hard is detected by the VM
+•	Now Turn On the VM and Open Server Manager Click on Tools
+Note: This is to be done in the Administrator and not as SCDPM
+•	In Tools Click on Computer Management
+•	Click on Disk Management
+•	Right Click on Disk 1 and Select Online
+•	Again Right Click on Disk 1 and Select Initialise Disk
+•	Select GPT and Click Ok
+•	Right-Click on the storage of Disk 1 and Click on Create new simple volume
+•	Click on Next
+•	Keep default values and Click on Next
+•	Keep default values and Click on Next
+•	Keep default values and Click on Next
+•	Click on Finish
+•	After the volume is created change the user back to SCDPM and Run SCDPM
+•	Click on Management and Select Disk Storage
+•	Click on Add
+•	Select volume E and Click Add, then Name the Storage (Here it is SCDPM VOLUME) and Click Ok
+•	It will start Adding disk storage
+•	The Storage has been created
+
+5B: Deploy Protection Agent
+Step 9: Creating a Production Server
+•	Within Management Click on Production Servers and Click on Add
+•	Select Windows Server and Click on Next
+•	Select Install Agents and Click Next
+•	Select EDTECH and Click Add and then Click on Next
+•	Type in the credentials and Click on Next 
+•	Select No, I will restart the selected computers later and Click Next
+•	Click on Install
+Note: If there is an error 313 or 319 then Disable the firewalls of both the Domain Controller and SCDPM. You can also refer to Step 11 for the cmd commands for allowing particular files in the firewall
+•	Protection agent deploy successfully.
+
+5C: Deploy Protection Groups
+Step 10: Creating a Protection Group in SCDPM
+•	Click on Protection and Click on New
+•	Click on Next
+•	Select Server and Click on Next
+•	Keep the default values and Click on Next
+•	Keep the default values and Click on Next
+•	Keep the default values and Click on Next
+•	Keep the default values and Click on Nex
+•	Select Automatic and Click on Next
+•	Keep the default values and Click on Next
+•	Click on Create Group
+•	Protection Group has been successfully created
+•	Protection Group has been successfully created
+5D: Configure Firewall Settings
+Step 11: Run firewall commands in command prompt
+•	netsh advfirewall firewall add rule name="DCOM TCP 135" dir=in action=allow protocol=TCP  localport=135
+•	netsh advfirewall firewall add rule name="DCOM Dynamic Ports" dir=in action=allow protocol=TCP  localport=1024-65535
+•	netsh advfirewall firewall add rule name="DPM Agent Coordinator 5718" dir=in action=allow protocol=TCP localport=5718
+•	netsh advfirewall firewall add rule name="DPM Protection Agent 5719" dir=in action=allow protocol=TCP localport=5719
+•	netsh advfirewall firewall add rule name="DNS UDP 53" dir=in action=allow protocol=UDP localport=53
+•	netsh advfirewall firewall add rule name="Kerberos UDP 88" dir=in action=allow protocol=UDP localport=88
+•	netsh advfirewall firewall add rule name="Kerberos TCP 88" dir=in action=allow protocol=TCP localport=88
+•	netsh advfirewall firewall add rule name="LDAP TCP 389" dir=in action=allow protocol=TCP localport=389
+•	netsh advfirewall firewall add rule name="LDAP UDP 389" dir=in action=allow protocol=UDP localport=389
+•	netsh advfirewall firewall add rule name="NetBIOS UDP 137" dir=in action=allow protocol=UDP localport=137
+
+•	netsh advfirewall firewall add rule name="NetBIOS UDP 138" dir=in action=allow protocol=UDP localport=138
+•	netsh advfirewall firewall add rule name="NetBIOS TCP 139" dir=in action=allow protocol=TCP localport=139
+
+
+
+
+
+
+
+
+Practical: 6
+Aim: Manage Orchestrator Servers.
+6A: Manage Orchestrator Servers-1
+Note: Establishing a connection with the User VM and Domain Controller by connecting the User VM to the Domain Controller’s Workgroup
+6A-1: Runbook permissions
+Runbook access permissions are set through the Runbook Designer. By default, only users in the Orchestrator Users Group have full access to a runbook. Here We Add additional User and give access to additional users to run, start, stop, view, and change runbooks at either the folder level or the individual runbook level.
+Pre-requisites:
+Domain Controller (Here Domain Controller Name Winser (New))
+User Server (Here User Name SCO_PRAC6)
+Step 1: Creation Of User (SCO_PRAC6)
+•	To create a User first we require the Active Directory Domain Service which can be added through the Server Manager
+•	Open Server Manager and Click on Add Roles and Features
+•	Click on Next
+•	Select Role-based or Feature-based installation and Click Next
+•	Keep default settings and Click on Next
+•	Select Active Directory Domain Service and Click on Add Feature and Click on Next
+•	Select the following feature and Click on Next
+•	Click on Next
+•	Click on Next
+•	Feature installation Processes start
+•	After the installation Click on Close
+•	After installation, within Server Manager Click on Tools and Select Active Directory User and Computers
+•	Click on Ok
+•	Within Active Directory Users and Computers, Click on Action and Select Change Domain
+•	Click on Browse and Select the Domain Controller (Here it is EDTECH.COM) and Click Ok
+•	Click on Ok
+•	Now the Domain Controller will be added, Click on the Domain Controller and Click on Users
+•	Right Click on Users and Click New and User
+
+•	Type in a new User name (here it is SCO) and Click Next
+•	Type in a password and Select Password never expires and Click Next
+•	Click on Finish
+•	Add the User to the Domain Group, Right Click on SCDPM and Select Add to a group
+•	Type in Administrator and Click on Check Names and Click on Ok
+•	Click on OK
+
+Step 2: View or modify the permissions of a runbook
+•	Open Runbook Designer
+•	Runbook Designer Window Open
+•	In the Runbook Designer, in the Connections pane, select the Runbooks folder.
+•	In the Runbook Designer Design workspace, right-click the tab for a runbook to select Permissions.
+•	To give another user or security group access to the runbook, select the Add button.
+•	select the user or security group from the local computer or from the domain.
+•	Here in Window Type SCO and Click on Check Names
+•	Click on Ok
+•	Here We Can See new user SCO Added to the Runbook.
+•	Now this user has access to run, start, stop, view, and change runbooks at either the folder level or the individual runbook level.
+•	To close the Permissions for Runbook dialog and save any changes, select OK
+
+
+6A-2: Create a benchmark runbook
+Step 3: Create a runbook that can be used to benchmark your Orchestrator environment
+•	Create a New Runbook
+•	Add a Compare Values activity from the Standard Activity palette.
+•	Double-click the activity to configure it.
+•	Select the General tab and configure this activity to compare strings (the default value).
+•	Select the Details tab, enter the value STRING in the Test box and select is empty.
+•	Keep the default setting.
+•	Select Finish to save the updates to the activity.
+•	Right-click the activity and select Looping.
+•	Select the Enable checkbox and enter the number 0 (zero) for Delay between attempts.
+•	Select the Exit tab and Click on Compare Values
+•	check the Show Common Published Data checkbox, and select Loop: Number of attempts.
+•	Select OK to save this change.
+•	Click on equals value
+•	Enter the number 10.
+•	Select OK to save this change.
+•	Select Finish to save these updates.
+•	Add a Delate Line and Insert Line activity from the Standard Activity palette.
+•	Click on Delate Line
+•	Select the Details Tap Within Details Click on File Select SCO-TEXT.txt From Desktop.
+•	Click on File encoding Select ASCII
+•	Within Delete Enter the line number of the text that you want to delete from the SCO-TEXT.txt file (Here line number 2)
+•	Keep the default value
+•	Keep the default value and Click on Finish to Save the Changes to the Delete Line Activity.
+•	Click on Insert Line
+•	Select the Details Tap Within Details Click on File Select SCO-TEXT.txt From Desktop.
+•	Click on File encoding Select ASCII
+•	Within Insert Enter the text that you want to insert into the file (Here New Text line is: THIS IS NEW TEXT LINE)
+•	Within Insert Enter the line number where the text will be inserted (Here line number: 2) and Click on Finish to save the changes to the Insert activity.
+•	Now Connect the activity through the smart Link
+•	Click on Runbook Tester
+•	Click on Run
+
+
+6A-3: Optimize performance of .NET activities
+Improve assembly load time
+When a runbook containing an activity that references the .NET assemblies executes, the job process has to load the referenced assembly when such an activity is executed. Any subsequent execution of the same activity or other activities from the assembly will reuse the loaded assembly.
+Loading an assembly may cause a delay of up to 30 seconds. This delay can also occur when a runbook is started on a computer without Internet access, because Windows can't verify the Microsoft Authenticode signature for the .NET assemblies.
+To remove the delay you can either deactivate generatePublisherEvidence in PolicyModule.exe, or you can create a profile for the service account.
+Step 4: Deactivate generatePublisherEvidence in policymodule.exe.config.
+•	Locate the file C:\Program Files (x86)\Microsoft System Center\Orchestrator\Runbook Server\policymodule.exe.config on the runbook server that executes runbooks containing an activity referencing a .NET assembly.
+•	Open policymodule.exe.config File on Notepad.
+•	Add the following code to policymodule.exe.config:
+
+6B: Manage Orchestrator Servers-2
+6B-1: recover web components
+When you use the Database Configuration utility to modify the Orchestrator database, the tool won’t modify the Web Service database reference (only the installer performs this task). You will need to manually modify it after updating with the database configuration utility.
+Step 5: Modify the Web Service database 
+Decrypt the connection string
+•	Open a Command Prompt using Run as administrator.
+•	Execute the following command (assuming the default installation path):
+•	Decryption of Connection String Succeeded
+•	Open Server Manager Click on Tools Within Tools Select Internet Information Services (IIS) Manager
+•	Click on Sites Within Sites Click on Orchestrator2012
+•	Double Click on Connection Strings
+•	Right-Click on OrchestratorContext and Click on Edit
+•	Open SQL Server Manager Within Database Create a New Database and Give Name rahul_data
+•	Click on SQL Server Enter SQL Server Name (Here Server Name: WIN-BFN7GTBLDD6) and Database Name (Here Database Name: rahul_data)
+•	Click on Ok
+•	In Connection String Server Name Database Name
+•	re-encrypt the connection strings, you can execute the following command at the command prompt:
+•	Here we Can Encryption of Connecting Strings Succeeded.
+
+
+6B-2: Add an integration pack
+Step 6: Install System Center (SC) 2016
+•	After the Installation System Center 2016 Go to the SQL Folder and Double Click on SC2016_Ips
+•	Click on Run
+•	Click on Ok
+•	Click on Deployment Manager
+•	Deployment Manager Window Open
+Step 7: Register Integration Pack
+•	Right-Click on Integration Pack and Select Register IP with Orchestrator Management Server
+•	Integration Pack Registration Wizard Open
+•	Click on Next
+•	In the Select Integration Packs or Hotfixes dialog, select Add.
+•	Within SCO Select SC2016_Integration_Pack_for_Data_Protection and Click on Open
+•	Click on Next
+•	In the Completing the Integration Pack Wizard dialog, select Finish.
+•	On the End User Agreement dialog, read the Microsoft Software License Terms, and select Accept.
+
+Step 8: deploy an integration pack
+•	right-click Integration Packs, select Deploy IP to Runbook or Runbook Designer.
+•	Click on Next
+•	Click on Check-box And Click on Nex
+•	Enter Computer Name (Here Computer Name: WIN-BFN7GT8LDD6) After Enter Computer Name Click Add 
+•	Click on Nex
+•	Keep default values and Click on Next
+•	In the Completing Integration Pack Deployment Wizard dialog, select Finish.
+•	When the integration pack is deployed, the Log Entries dialog displays a confirmation message.
+
+
+6B-3: Change Orchestrator user groups
+Step 9: We can change the Orchestrator Users group by using the PermissionsConfig tool, which is located on the management server in <InstallDir>\Management Server.
+•	Open Management Server File On CMD
+
+Type Following Code:
+•	PermissionsConfig.exe
+•	PermissionsConfig -OrchestratorUsersGroup Administrator -OrchestratorUser SCO [-remote]
+•	PermissionsConfig.exe -help
+
+
+6B-4: Computer groups
+Step 10: Add a computer group
+•	Open Runbook and then Right-Click on Computer Groups and Click on New then Select Computer Groups
+•	In the New Computer Group dialog box, on the General tab, in the Name and Description boxes, type a EDTECH_SCO 
+•	Click on Contents tab and then Click on Add
+•	Enter the name of the computer that you are adding (Here Computer Name WIN-BFN7GT8LDD6). Click OK to add the computer.
+•	Click on Finish
+•	We Successfully Add New Computer Groups
+
+
+Practical: 7
+Aim: Protect Workloads Using Data Protection Manager.
+
+Pre-requisites:
+Hyper-V
+Domain Controller (Here Domain Controller Name is: prac5)
+User (Here User Name is: SQLPRACTICAL)
+Step 1: Installing Hyper-V
+•	open Server Manager
+•	Within Server Manager Click on Add roles and features
+•	Click On Next
+•	In Installation Type Select Role-based or feature-based installation
+•	Keep default setting and click on Next
+•	Select Hyper-V and Click Add Features and Click Next
+•	Select Failover Clustering and click on add feature and click Next 
+•	Make sure Group Policy Management also selected
+•	Click Next
+•	In Network adapters: check Ethernet0 and click Next
+•	Select Allow this server to send and receive live migrations of virtual machines
+And Click Next
+•	Keep default and click on Next
+•	Click install after installation of hyper-v restart the virtual machine.
+
+
+
+Step 2: Back up Hyper-V virtual machines
+•	Open Server Manager
+•	Within Server Manager Click on Hyper-V and Click on Tools
+•	Within Tools Click on Hyper-V Manager
+•	Hyper-V Manager Window Open
+•	Right-Click on EDTECH and Click on New and Select Virtual Machine
+•	Click Next
+•	Specify Name For Your Virtual Machine (Here Virtual Machine Name: Rahul_hyper-v)
+•	Click Next
+•	Select Generation 1
+•	Click Next
+•	Keep Default Setting and Click on Next
+•	Within Connection Select Intel® 82574L Gigabit Network Connection-Virtual Switch
+•	Click Next
+•	Specify Disk Size 40GB and Click on Next
+•	Click on Install an operating system from a bootable CD/DVD-ROM
+•	Within Media Click on Image file (.iso)
+•	Click on Browse
+•	Select Windows 7 Home Basic SP1 (64 Bit) and Click on Open
+•	Click Next
+•	Click on Finish
+•	New Virtual Machine Created
+•	Right-Click on Rahul_hyper-v and Click on Start
+•	Virtual Machine Start
+
+Step 3: Within User Server Click on System Center Data Protection Manager (DPM)
+•	Click on Protection
+•	Click on New to Create Protection Group
+•	Click on Next
+•	Select Server and Click on Next
+•	On the Select Group Members page, Click on EDETCH and Click on HyperV Within HyperV select the RCT\Rahul_hyper-v VM to protect from the Hyper-V host servers on which they're located.
+•	Click on Next
+•	Type Protection group name (Here Protection group name: Rahul_hyper-v)
+•	Click on Next
+•	Keep the default values and Click on Next
+•	Click on Next
+•	Keep the default setting and Click on Next
+•	Keep the default setting and Click on Next
+•	Click on Create Group
+•	It will start creation of protection group
+•	Creation of Protection Group Succeeded
+•	Click on Close
+•	Here we can see Replica creation Rahul_hyper-v in progress
+•	Replication created
+
+Step 3: Back up SQL Server with DPM
+•	Open SQL Server Manager Studio
+•	Click on Connec
+•	Right-Click on Database and Select New Database
+•	Type Database Name (Here Database Name: Rahul_DB)
+•	Click on Ok
+•	Database Created
+•	Click on New to Create Protection Group
+•	Click on Next
+•	Select Server and Click on Next
+•	Select Group Members, select the SQL Server instances on the server you want to Protect Here Click on EDTECH and Click on ALL SQL Servers Within ALL SQL Servers Select Rahul_DB.
+•	Click on Next
+•	Type Protection group name (Here Protection group name: Rahul_DB)
+•	Click on Next
+•	Keep the default values and Click on Next
+•	Click on Next
+•	Keep the default setting and Click on Next
+•	Keep the default setting and Click on Next
+•	Click on Create Group
+•	It will start creation of protection group
+•	Creation of Protection Group Succeeded
+•	Click on Close
+•	Here we can see Replica creation in progress
+
+Step 4: Backup system state
+•	Click on New to Create Protection Group
+•	Click on Next
+•	Select Server and Click on Next
+•	In Select Group Members, expand the System Protection and select System State.
+•	Click on Next
+•	Type Protection group name (Here Protection group name: System Center)
+•	Click on Next
+
+•	Keep the default values and Click on Next
+•	Click on Next
+•	Keep the default setting and Click on Next
+•	Keep the default setting and Click on Next
+•	Click on Create Group
+•	It will start creation of protection group
+•	Here we can see Replica of System State Created
+
+Step 5: Back up file data with DPM
+•	Open SQL Server Manager Studio
+•	Click on Connect
+•	Right-Click on Database and Select New Database
+•	Type Database Name (Here Database Name: Rahul_DB)
+•	Click on Ok
+•	Database Created
+•	Click on New to Create Protection Group
+•	Click on Next
+•	Select Server and Click on Next
+•	Select Group Members, select the SQL Server instances on the server you want to Protect Here Click on EDTECH and Click on ALL SQL Servers Within ALL SQL Servers Select Rahul_DB.
+•	Click on Next
+•	Type Protection group name (Here Protection group name: Rahul_DB)
+•	Click on Next
+•	Keep the default values and Click on Next
+•	Click on Next
+•	Keep the default setting and Click on Next
+•	Keep the default setting and Click on Next
+•	Click on Create Group
+•	It will start creation of protection group
+•	Creation of Protection Group Succeeded
+•	Click on Close
+•	Here we can see Replica creation of EDTECH\Rahul_DB in progress
+
+Step 6: Backup and restore VMware servers
+•	Open Server Manager
+•	Within Server Manager Click on Hyper-V and Click on Tools
+•	Within Tools Click on Hyper-V Manager
+•	Hyper-V Manager Window Open
+•	Right-Click on EDTECH and Click on New and Select Virtual Machine
+•	Click Next
+•	Specify Name For Your Virtual Machine (Here Virtual Machine Name: Rahul_Vmware)
+•	Click Next
+•	Select Generation 1
+•	Click Next
+•	Keep Default Setting and Click on Next
+•	Within Connection Select Intel® 82574L Gigabit Network Connection-Virtual Switch
+•	Click Nex
+•	Keep Default Setting and Click on Next
+•	Click on Install an operating system from a bootable CD/DVD-ROM
+•	Within Media Click on Image file (.iso)
+•	Click on Browse
+•	Select VMware-VMvisor-Insaller-7 and Click on Open
+•	Click Next
+•	Click on Finish
+•	Right-Click on Rahul_VMware and Click on Start
+•	Virtual Machine Start
+Step 7: Within User Server Click on System Center Data Protection Manager (DPM)
+•	Click on Protection
+•	Click on New to Create Protection Group
+•	Click on Next
+•	Select Server and Click on Next
+•	On the Select Group Members page, Click on EDETCH and Click on HyperV Within HyperV select the RCT\Rahul_Vmware to protect from the Hyper-V host servers on which they're located.
+•	Click on Next
+•	Type Protection group name (Here Protection group name: Rahul_Vmware)
+•	Click on Next
+•	Keep the default values and Click on Next
+•	Click on Next
+•	Keep the default setting and Click on Next
+•	Keep the default setting and Click on Next
+•	Click on Create Group
+•	It will start creation of protection group
+•	Creation of Protection Group Succeeded
+•	Click on Close
+•	Here we can see Replica creation of Rahul_Vmware in progress
+
+
+
+
+Practical: 8
+Aim: Managing Services with Configuration manager and Designing a Hierarchy of sites using Microsoft End Point Configuration Manager
+¬¬¬¬¬               
+Pre-requisites:
+Domain Controller (Here Domain Controller Name: Winser (New))
+User Server (Here User Server Name: SCCM_USER PRACTICAL 8)
+System Center Configuration Manager
+SQL Server 2016
+MS SQL Management Studio
+Windows ADK 1903 and Windows PE add-on
+Step 1: Step 1: We will be using the same Domain Controller created in Practical 2 and only have to create a new User VM.
+•	Open VMware Workstation and Click on Create a New Virtual Machine.
+•	Select Custom and Click on Next.
+•	Keep default values and Click Next
+•	Select Installer disc image file (iso): Click on Browser and Select Windows Server 2016 and Click on Nex
+•	Click Yes and Click on Next
+•	Give Virtual Machine Name (Here it is SCCM_USER PRACTICAL 8) and Click on Next
+•	Select BIOS and Click on Next
+•	Keep default values and Click on Nex
+•	Change the RAM value to 4096 MB and Click Next
+•	Keep default values and Click on Next
+•	Keep default values and Click on Next
+•	Select SCSI and Click on Nex
+•	Keep default values and Click on Next
+•	Keep default values and Click on Next
+•	Keep default values and Click on Next
+•	Click on Finish
+•	Your Virtual Machine Has Been Created
+Step 2: Before Power on this virtual machine a few changes need to be in this virtual machine settings.
+•	Click on Edit virtual machine settings
+•	Within virtual machine settings Select Floppy and Un-Click Connect on Power on and Click on OK
+•	Click on Processors Within Virtualization engine Check following features and Click on Ok
+•	Now Power On your virtual machine
+•	Click on Next
+•	Click on Install Now
+•	Select Window Server 2016 Datacenter Evaluation (Desktop Experience) and Click on Next
+•	Select I accept the license and Click on Next
+•	Keep default settings and Click on Next
+•	Windows Server will begin installing
+•	After installation type in a password for the Windows Server and Click Fin
+•	Your Windows Server has now been successfully created
+
+Step 3: Establishing a connection with the User VM and Domain Controller by connecting the User VM to the Domain Controller’s Workgroup
+•	Open Control Panel and Click on Network and Internet
+•	Click on Network and Sharing Center
+•	Click on Change adapter settings
+•	Right Click on Ethernet0 and Select Properties
+•	Within Ethernet0 Status Click on Properties
+•	Click on Internet Protocol Version 4
+•	Click on Advanced
+•	Click on DNS
+•	Click on Add
+•	Add the IP Address of the Domain Controller and Click Ok
+•	Click on Ok
+•	Now Exit out of network settings and Click on Server Manager
+•	Within Server Manger Click on Local Server and Select Workgroup
+•	Click on Chang
+•	Click on Domain
+•	Type the Domain name (here it is EDTECH.COM) and Click Ok
+•	Enter the credentials of the Domain Controller and Click on Ok
+•	The User VM is now in the same Domain as the Domain Controller and the system will require a restart for the changes to take effect
+
+Step 4: Creation of User (SCCM_USER PREACTICAL 8)
+•	To create a User first we require the Active Directory Domain Service which can be added through the Server Manager
+•	Open Server Manager and Click on Add Roles and Feature
+•	Click on Next
+•	Select Role-based or Feature-based installation and Click Next
+•	Keep default settings and Click on Next
+•	Select Active Directory Domain Service and Click on Add Feature and Click on Next
+•	Select the following feature and Click on Next
+•	Click on Next
+•	Click on Next
+•	Click on Next
+•	Click on Next
+•	Click on Install
+•	Installation Process Start
+•	After Installation Click on Close
+•	After installation, within Server Manager Click on Tools and Select Active Directory User and Computers
+•	Within Active Directory Users and Computers, Click on Action and Select Change Domain
+•	Click on Browse and Select the Domain Controller (Here it is EDTECH.COM) and Click Ok
+•	Click on OK
+•	Now the Domain Controller will be added, Click on the Domain Controller and Click on Users
+•	Right Click on Users and Click New and User
+•	Type in a new User name (here it is SCCMUSER) and Click Next
+•	Type in a password and Select Password never expires and Click Next
+•	Click on Finish
+•	Add the User to the Domain Group, Right Click on SCCMUSER and Select Add to a group
+•	Enter your credentials for an account with permissions for EDTECH.EDTECH.COM
+•	Type in Administrator and Click on Check Names and Click on Ok
+•	Click on OK
+•	Now Login as SCCMUSER
+•	Now Right-Click on Users and Select Delegate Control
+•	Click on Next
+•	Click on Add
+•	Type SCCMUSER and Click on Check Names
+•	Click on Ok
+•	Click on Next
+•	In the Task to Delegate, select Create a custom task to delegate click Next.
+•	In the Active Directory Object Type select This folder, existing objects in this folders, and creation of new objects in this folder and click Next.
+•	Tick on the 3 permissions General, Property-specific and Creation/deletion of specific child objects. Under Permissions tick on Full Control and click Next.
+•	Click Finish to close the wizard.
+
+
+
+
+Step 5: Extending Active Directory Schema for SCCM_USER PRACTICAL 8
+•	Open you SCCM Folder and Select the sccm setup Folder
+•	Open SMSSETUP
+•	Click on BIN
+•	Within BIN Select the x64 folder, Now within the x64 folder Select Extadsch.exe
+•	Type CMD
+•	Open the file using command prompt
+•	To confirm the extension, go to your C: Directory and Open the ExtADSch.txt file
+•	when you open ExtADSch file, you’ll find the line: Successfully extended the Active Directory schema.
+
+Step 6: Upgrade your current user with Administrative Rights
+•	Open Control Panel and Click on User Account
+•	Click on Add
+•	Enter User Name Here User Name Type SCCM
+•	Enter Domain Name Here Domain Name EDTECH.COM
+•	Click on Next
+•	Click on Finish
+
+Note: After Upgrade your current user with Administrative Rights login with EDTECH.COM\SCCMUSER
+Step 7: Configure Windows Firewall
+•	Open Windows Firewall with Advanced Security
+•	Click on Inbound Rules
+•	Right-Click on Inbound Rule and Select New Rule
+•	Select Port and Click on Next
+•	In the Protocol and Ports dialog box, select TCP. Select Specific local ports, and then type port numbers 1433 for SQL Server default instance and 4022 for Inter-site communications use the SQL Server Service Broker. Click Next.
+•	In the Action dialog box, select Allow the connection, and then click Next.
+•	In the Profile dialog box, select Domain and then click Next.
+•	In the Name dialog box, type a profile name,like SQL ports for ConfigMgr and then click Finish.
+
+Step 8: Install Web Server (IIS) Role and other Features
+•	Open Server Manager and then Click on Add roles and feature
+•	Click Next
+•	Select Role-based or Feature-based installation and Click Next
+•	Keep default values and Click Next
+•	Select Web Server (IIS) and Click Add Feature and Click Next
+•	Select .NET Framework 3.5 and Background Intelligent Transfer Service (BITS) and Remote Differential Compression Click Next
+•	Click Next
+In the Web Server Role (IIS) > Role Services select the following:
+Web Server (IIS)
+Web Server
+•	Common HTTP Features: Default Document, Directory Browsing, HTTP Errors Static Content, HTTP Redirection
+•	Health and Diagnostics: HTTP logging, Logging tools, Request Monitor Tracing, Tracing
+•	Performance: Static Content Compression
+•	Security: Windows Authentication
+•	Application Development: .NET Extensibility 3.5, .NET Extensibility 4.7, ASP.NET 3.5, ASP.NET 4.7, ISAPI Extensions, ISAPI Filters
+Management Tools
+•	IIS Management Console
+•	IIS 6 Management Compatibility: IIS 6 Metabase Compatibility, IIS 6 WMI Compatibility
+•	IIS Management Scripts and Tools
+In the Add Roles and Feature Wizard > Confirm installation selection page, review the Roles and Features selected:
+•	NET Framework 3.5 Features 
+•	.NET Framework 4.7 Features 
+•	Background Intelligent Transfer (BITS)
+•	Remote Differential Compression
+•	Web Server (IIS)
+After Selecting Above Feature Click on Next
+•	Click Install
+•	After the Installation of feature Click on Close
+Step 9: Installing and Configuring SQL Server 2016
+•	Open your sql 2016 folder
+•	Click on setup
+•	Click on Installation and Select New SQL Server stand-alone installation
+•	Select Specify a free edition and Click on Evaluation and Click Next
+•	Select I accept these license terms and Click Next
+•	Click Next
+•	Click Next
+•	In Feature Selection Click on Database Engine Services and Click Next
+•	Keep default values and Click Next
+•	Type in the credentials of your User account (Here User account name: EDTECH.COM\SCCMUSER) and Click Next
+•	Click on Add Current User and Click Next
+•	Click Install
+•	Installation start
+•	Click Close
+
+Step 10: Installing SQL Server Management Studio 18
+•	Within Your SCCM Folder Double-Click on SSMS-Setup-ENU
+•	Click Install
+•	It will start installing necessary file
+•	Click on Restart
+•	Open Microsoft SQL Server Management Studio 18
+•	After restarting the system Launch SQL Server Management Studio 18 and Click Connect
+•	Right-click on the WIN-UFIBT9NM6MT (SQL Server) and select Properties.
+•	Select Memory and Edit the Minimum Server Memory to 2048 MB and the Maximum Server Memory to 4096 MB and Click Ok
+Step 11: Windows ADK Installation
+•	Open SCCM Folder and then Double-Click on adksetup
+•	Click on Run
+•	Click on Next
+•	Select No and then Click on Next
+•	Click on Accept and then Click Next
+•	Select the Following features (Deployment Tools, Imaging and Configuration Designer, Configuration Designer and User State Migration Tool) and Click Install
+•	It will start installing features
+•	You’ll get the Welcome screen to Windows 10 ADK once the installation is completed. Click Close to finish the installation.
+Step 12: Installing Windows PE add-on
+•	Open SCCM Folder and then Double-Click on adkwinpesetup
+•	Click Run
+•	Click Next
+•	Select No and then Click Next
+•	Click Accept
+•	Click on Install
+•	It will start installing features
+•	Click on Close
+After Setting up Click Install, Once the installation is complete Click on Close
+Now it show on the SCCM Dashboard
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
